@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import DB.Globals;
+import progra3.Clientes;
+
 /**
  *
  * @author Era Luz
@@ -100,6 +103,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
         String usuario = this.jTextField2.getText();
         String clave = this.jTextField2.getText();
         

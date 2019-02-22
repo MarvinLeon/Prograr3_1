@@ -107,6 +107,10 @@ public class Clientes {
         this.comentario1 = comentario1;
         this.comentario2 = comentario2;
     }
+    
+    public Clientes(){
+        
+    }
     public int nit;
     public String empresa;
     public String nombre;
