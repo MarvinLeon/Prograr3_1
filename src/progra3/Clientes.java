@@ -122,6 +122,15 @@ public class Clientes {
     public boolean activo;
     public String comentario1;
     public String comentario2;
+    private String direccion;
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     
     
 }

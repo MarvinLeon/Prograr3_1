@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import progra3.Clientes;
+import progra3.Producto;
 
 /**
  *
@@ -16,5 +17,7 @@ import progra3.Clientes;
  */
 public class Globals {
     public static HashMap<String, Clientes> clientes = new HashMap<String, Clientes>();
+    public static HashMap<String, Producto> producto = new HashMap<String, Producto>();
+    
     
 }

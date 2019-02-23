@@ -7,6 +7,7 @@ package GUI;
 
 import DB.Globals;
 import progra3.Clientes;
+import progra3.Producto;
 
 /**
  *
@@ -18,7 +19,36 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
-        initComponents();
+        Producto p = new Producto();
+        p.setNombre("Coca-Cola");
+        p.setCantidad(50);
+        p.setPrecio(6.00);
+        p.setProductoID("1");
+        
+        Globals.producto.put("1", p);
+        
+        p = new Producto();
+        p.setNombre("Tortrix");
+        p.setCantidad(50);
+        p.setPrecio(1.25);
+        p.setProductoID("2");
+        Globals.producto.put("2", p);
+        
+        
+       Clientes c  = new Clientes();
+        c.setNombre("erick");
+        c.setCorreo("flaco1413@gmail.com");
+        c.setDireccion("9 av 4 -16 zona 11");
+        
+        //Lo agregas al hasmap poniendo la llave y valor
+        Globals.clientes.put("9045059-0", c);
+        c  = new Clientes();
+        c.setNombre("Luis Aguilar");
+        c.setCorreo("laguilar@gmail.com");
+        c.setDireccion("Guatemala, Cuidad");
+         Globals.clientes.put("7741110-2", c);
+        
+       initComponents();
     }
 
     /**
@@ -33,6 +63,8 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,6 +78,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Cierre Caja");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Ver cuenta Corriente");
+        jMenuItem3.setActionCommand("Jmnu");
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -71,6 +110,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        Venta v  = new Venta();
+        v.setVisible(true);
        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -114,5 +155,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }
