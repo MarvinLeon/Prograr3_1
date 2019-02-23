@@ -6,7 +6,24 @@
 package GUI;
 
 import DB.Globals;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import progra3.Cheque;
 import progra3.Clientes;
+import progra3.Contado;
+import progra3.Credito;
 import progra3.Producto;
 
 /**
@@ -80,6 +97,11 @@ public class Main extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Cierre Caja");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Ver cuenta Corriente");
@@ -114,6 +136,68 @@ public class Main extends javax.swing.JFrame {
         v.setVisible(true);
        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        Document doc = new Document();
+        String path = "c:/temp/Cierre.pdf";
+        try {
+            FileOutputStream f = new FileOutputStream(path);
+            PdfWriter.getInstance(doc, f);
+            doc.open();
+
+            double fContado = 0.00;
+            List<Contado> c = Globals.contado;
+            
+            for(Contado x: c){
+                fContado = fContado + x.getMonto();
+            }
+            
+            double fCheque = 0.00;
+            List<Cheque> ch = Globals.cheques;
+            
+            for(Cheque x: ch){
+                fCheque = fCheque + x.getMonto();
+            }
+            
+            double fCredito = 0.00;
+            List<Credito> cr = Globals.credito;
+            
+            for(Credito x: cr){
+                fCredito = fCredito + x.getMonto();
+            }
+            
+            
+            
+            
+            
+            Paragraph preface = new Paragraph();
+            preface.add(new Paragraph("Contado: " + fContado));
+            preface.add(new Paragraph("Cheques: " +  fCheque));
+            preface.add(new Paragraph("Credito: " + fCredito));
+            preface.add(new Paragraph("  "));
+
+            
+
+            doc.add(preface);
+
+            doc.close();
+            System.out.println("done");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(path);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

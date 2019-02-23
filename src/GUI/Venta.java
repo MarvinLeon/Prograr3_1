@@ -17,10 +17,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import progra3.Cheque;
 import progra3.Clientes;
+import progra3.Contado;
+import progra3.Credito;
 import progra3.Producto;
 
 /**
@@ -33,12 +37,15 @@ public class Venta extends javax.swing.JFrame {
      * Creates new form Venta
      */
     DefaultTableModel model;
+
     public Venta() {
         initComponents();
-        model = (DefaultTableModel ) this.jTable1.getModel();
-        
+        model = (DefaultTableModel) this.jTable1.getModel();
+
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,8 +81,8 @@ public class Venta extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("NIT");
@@ -176,6 +183,10 @@ public class Venta extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Cheque", "Credito" }));
+
+        jLabel16.setText("Tipo de Pago");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -234,7 +245,12 @@ public class Venta extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4)))))
+                                    .addComponent(jButton4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(201, 201, 201)
                         .addComponent(jLabel13)))
@@ -280,6 +296,10 @@ public class Venta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addComponent(jButton4)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel12)
@@ -300,15 +320,15 @@ public class Venta extends javax.swing.JFrame {
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
-        
-        if(this.jCheckBox1.isSelected()){
+
+        if (this.jCheckBox1.isSelected()) {
             System.out.println("Consumidor Final");
             this.jTextField1.setText("C/F");
             this.jTextField1.setEnabled(false);
             this.jButton1.setEnabled(false);
             this.jLabel4.setText("C/F");
             this.jLabel5.setText("C/F");
-        }else{
+        } else {
             this.jTextField1.setText("");
             this.jTextField1.setEnabled(true);
             this.jButton1.setEnabled(true);
@@ -321,15 +341,15 @@ public class Venta extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nit = this.jTextField1.getText().trim();
         Clientes cliente = Globals.clientes.get(nit);
-        if(cliente != null){
+        if (cliente != null) {
             System.out.println(cliente.getNombre());
             this.jLabel4.setText(cliente.getNombre());
             this.jLabel5.setText(cliente.getDireccion());
-            
-        }else{
-            
+
+        } else {
+
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     Double total = 0.0;
@@ -339,22 +359,21 @@ public class Venta extends javax.swing.JFrame {
         String codigo = this.jTextField2.getText().trim();
         String producto = this.jLabel6.getText();
         int cantidad = Integer.parseInt(this.jTextField3.getText());
-        Double precio = Double.parseDouble(this.jLabel11.getText()) ;
+        Double precio = Double.parseDouble(this.jLabel11.getText());
         Double subtotal = cantidad * precio;
         model.insertRow(model.getRowCount(), new Object[]{
-               codigo, producto, cantidad, precio,subtotal 
-            });
+            codigo, producto, cantidad, precio, subtotal
+        });
         total = total + subtotal;
         this.jLabel15.setText(total.toString());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+
         String codigo = this.jTextField2.getText().trim();
-        Producto p  = Globals.producto.get(codigo);
-        if(p!= null)
-        {
+        Producto p = Globals.producto.get(codigo);
+        if (p != null) {
             this.jLabel6.setText(p.getNombre());
             this.jLabel11.setText(p.getPrecio().toString());
             this.jTextField3.setText("");
@@ -363,10 +382,52 @@ public class Venta extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
         String nit = this.jTextField1.getText().trim();
         String nombre = this.jLabel4.getText();
-        System.out.println(nombre);
+         System.out.println(nombre);
         String d = this.jLabel5.getText();
+        
+        
+        
+        int index = this.jComboBox1.getSelectedIndex();
+        switch (index) {
+            case 0:
+                Contado c = new Contado();
+                c.setClente(nombre);
+                c.setFecha(new Date());
+                c.setNit(nit);
+                c.setStatus("1");
+                c.setMonto(total);
+                Globals.contado.add(c);
+                break;
+            case 1:
+                Cheque cq = new Cheque();
+                cq.setClente(nombre);
+                cq.setFecha(new Date());
+                cq.setNit(nit);
+                cq.setStatus("1");
+                cq.setMonto(total);
+                Globals.cheques.add(cq);
+                break;
+            case 2:
+                Credito cr = new Credito();
+                cr.setClente(nombre);
+                cr.setFecha(new Date());
+                cr.setNit(nit);
+                cr.setStatus("1");
+                cr.setMonto(total);
+                Globals.credito.add(cr);
+                break;
+            default:
+                break;
+        }
+        
+        
+        
+        
+        
+       
         Document doc = new Document();
         String path = "c:/temp/Factura.pdf";
         try {
@@ -375,29 +436,27 @@ public class Venta extends javax.swing.JFrame {
             doc.open();
 
             Paragraph preface = new Paragraph();
-             preface.add(new Paragraph("Nombre: " + nombre));
-             preface.add(new Paragraph("Direccion: " + d));
-             preface.add(new Paragraph("Nit: "+ nit));
-             preface.add(new Paragraph("  "));
-             
-        // We add one empty line
+            preface.add(new Paragraph("Nombre: " + nombre));
+            preface.add(new Paragraph("Direccion: " + d));
+            preface.add(new Paragraph("Nit: " + nit));
+            preface.add(new Paragraph("  "));
 
-        // Lets write a big header
-       
+            // We add one empty line
+            // Lets write a big header
             PdfPTable pdfTable = new PdfPTable(this.jTable1.getColumnCount());
-            
-             for (int i = 0; i < this.jTable1.getColumnCount(); i++) {
+
+            for (int i = 0; i < this.jTable1.getColumnCount(); i++) {
                 pdfTable.addCell(this.jTable1.getColumnName(i));
             }
             //extracting data from the JTable and inserting it to PdfPTable
-            for (int rows = 0; rows < this.jTable1.getRowCount() ; rows++) {
+            for (int rows = 0; rows < this.jTable1.getRowCount(); rows++) {
                 for (int cols = 0; cols < this.jTable1.getColumnCount(); cols++) {
                     pdfTable.addCell(this.jTable1.getModel().getValueAt(rows, cols).toString());
 
                 }
             }
-             Paragraph total = new Paragraph();
-             total.setAlignment(Element.ALIGN_RIGHT);
+            Paragraph total = new Paragraph();
+            total.setAlignment(Element.ALIGN_RIGHT);
             total.add(new Paragraph("  "));
             total.add(new Paragraph("Total: " + this.total));
             doc.add(preface);
@@ -410,8 +469,7 @@ public class Venta extends javax.swing.JFrame {
         } catch (DocumentException ex) {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-        
+
         if (Desktop.isDesktopSupported()) {
             try {
                 File myFile = new File(path);
@@ -419,7 +477,7 @@ public class Venta extends javax.swing.JFrame {
             } catch (IOException ex) {
                 // no application registered for PDFs
             }
-}
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -463,6 +521,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -470,6 +529,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

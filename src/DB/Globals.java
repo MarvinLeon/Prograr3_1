@@ -8,7 +8,10 @@ package DB;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import progra3.Cheque;
 import progra3.Clientes;
+import progra3.Contado;
+import progra3.Credito;
 import progra3.Producto;
 
 /**
@@ -18,6 +21,8 @@ import progra3.Producto;
 public class Globals {
     public static HashMap<String, Clientes> clientes = new HashMap<String, Clientes>();
     public static HashMap<String, Producto> producto = new HashMap<String, Producto>();
-    
+    public static List<Cheque> cheques = new ArrayList<Cheque>();
+     public static List<Contado> contado = new ArrayList<Contado>();
+    public static List<Credito> credito = new ArrayList<Credito>();
     
 }
